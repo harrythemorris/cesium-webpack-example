@@ -4,6 +4,7 @@ This repro is derived from the cesium-webpack-example.
 
 
 To test:
+- Install packages in `webpack-5` dir
 - Run `npm run start-5` to start the webpack dev server.
 - Run `npm run test-5` to start the test client. This emulates our setup where we load the bundle and cesium assets cross-origin.
 - Navigate to `http://localhost:3003` and you should encounter the errors as described in the [PR](https://github.com/CesiumGS/cesium/pull/11833)
