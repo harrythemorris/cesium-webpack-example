@@ -1,3 +1,19 @@
+# CORS worker issue minimal reproduction
+
+This repro is derived from the cesium-webpack-example.
+
+
+To test:
+- Run `npm run start-5` to start the webpack dev server.
+- Run `npm run test-5` to start the test client. This emulates our setup where we load the bundle and cesium assets cross-origin.
+- Navigate to `http://localhost:3003` and you should encounter the errors as described in the [PR](https://github.com/CesiumGS/cesium/pull/11833)
+
+The changes made are:
+- `webpack` outputs to a library target (`CorsTest`) and serves with CORS headers.
+- The library exports a single `init` function which contains the standard example code.
+- Move the html/css to a different dir to emulate our cross-origin app.
+- Updated `CESIUM_BASE_URL`` to point to the webpack origin.
+
 # cesium-webpack-example
 
 A minimal recommended setup for an applications using [Cesium](https://cesium.com) with [Webpack](https://webpack.js.org/).

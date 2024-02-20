@@ -27,6 +27,7 @@
     "start-4": "cd webpack-4 && npm run start",
     "build-4": "cd webpack-4 && npm run build",
     "start-5": "cd webpack-5 && npm run start",
+    "test-5": "cd webpack-5 && npm run start:client",
     "build-5": "cd webpack-5 && npm run build"
   },
   "devDependencies": {

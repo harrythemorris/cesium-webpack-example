@@ -3,12 +3,12 @@
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const cesiumSource = "node_modules/cesium/Build/Cesium";
 // this is the base url for static files that CesiumJS needs to load
 // Not required but if it's set remember to update CESIUM_BASE_URL as shown below
-const cesiumBaseUrl = "cesiumStatic";
+const cesiumAssetPath = "cesiumStatic";
+const cesiumBaseUrl = `http://localhost:8080/${cesiumAssetPath}`;
 
 module.exports = {
   context: __dirname,
@@ -19,6 +19,7 @@ module.exports = {
     filename: "app.js",
     path: path.resolve(__dirname, "dist"),
     sourcePrefix: "",
+    library: "CorsTest",
   },
   resolve: {
     mainFiles: ["index", "Cesium"],
@@ -35,28 +36,32 @@ module.exports = {
       },
     ],
   },
+  // Add CORS headers
+  devServer: {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: "src/index.html",
-    }),
     // Copy Cesium Assets, Widgets, and Workers to a static directory
     new CopyWebpackPlugin({
       patterns: [
         {
           from: path.join(cesiumSource, "Workers"),
-          to: `${cesiumBaseUrl}/Workers`,
+          to: `${cesiumAssetPath}/Workers`,
         },
         {
           from: path.join(cesiumSource, "ThirdParty"),
-          to: `${cesiumBaseUrl}/ThirdParty`,
+          to: `${cesiumAssetPath}/ThirdParty`,
         },
         {
           from: path.join(cesiumSource, "Assets"),
-          to: `${cesiumBaseUrl}/Assets`,
+          to: `${cesiumAssetPath}/Assets`,
         },
         {
           from: path.join(cesiumSource, "Widgets"),
-          to: `${cesiumBaseUrl}/Widgets`,
+          to: `${cesiumAssetPath}/Widgets`,
         },
       ],
     }),
